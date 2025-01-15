@@ -1,25 +1,17 @@
+from . import __version__ as app_version
+
 app_name = "pph21_addons"
 app_title = "PPH21 TER ADDONS"
 app_publisher = "DAS"
 app_description = "PPH21 TER ADDONS"
 app_email = "das@das.com"
-app_license = "mit"
-
-# Apps
-# ------------------
-
-# required_apps = []
-
-# Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "pph21_addons",
-# 		"logo": "/assets/pph21_addons/logo.png",
-# 		"title": "PPH21 TER ADDONS",
-# 		"route": "/pph21_addons",
-# 		"has_permission": "pph21_addons.api.permission.has_app_permission"
-# 	}
-# ]
+app_license = "MIT"
+fixtures = [ 
+	{
+		"dt": "PPh21 TER Master",
+		"filters":[["name", "in", ['TER A', 'TER B', 'TER C']]]
+	},
+]
 
 # Includes in <head>
 # ------------------
@@ -48,11 +40,6 @@ app_license = "mit"
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
-# Svg Icons
-# ------------------
-# include app icons in desk
-# app_include_icons = "pph21_addons/public/icons.svg"
-
 # Home Pages
 # ----------
 
@@ -61,7 +48,7 @@ app_license = "mit"
 
 # website user home page (by Role)
 # role_home_page = {
-# 	"Role": "home_page"
+#	"Role": "home_page"
 # }
 
 # Generators
@@ -75,8 +62,8 @@ app_license = "mit"
 
 # add methods and filters to jinja environment
 # jinja = {
-# 	"methods": "pph21_addons.utils.jinja_methods",
-# 	"filters": "pph21_addons.utils.jinja_filters"
+#	"methods": "pph21_addons.utils.jinja_methods",
+#	"filters": "pph21_addons.utils.jinja_filters"
 # }
 
 # Installation
@@ -91,22 +78,6 @@ app_license = "mit"
 # before_uninstall = "pph21_addons.uninstall.before_uninstall"
 # after_uninstall = "pph21_addons.uninstall.after_uninstall"
 
-# Integration Setup
-# ------------------
-# To set up dependencies/integrations with other apps
-# Name of the app being installed is passed as an argument
-
-# before_app_install = "pph21_addons.utils.before_app_install"
-# after_app_install = "pph21_addons.utils.after_app_install"
-
-# Integration Cleanup
-# -------------------
-# To clean up dependencies/integrations with other apps
-# Name of the app being uninstalled is passed as an argument
-
-# before_app_uninstall = "pph21_addons.utils.before_app_uninstall"
-# after_app_uninstall = "pph21_addons.utils.after_app_uninstall"
-
 # Desk Notifications
 # ------------------
 # See frappe.core.notifications.get_notification_config
@@ -118,11 +89,11 @@ app_license = "mit"
 # Permissions evaluated in scripted ways
 
 # permission_query_conditions = {
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
+#	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
 # }
 #
 # has_permission = {
-# 	"Event": "frappe.desk.doctype.event.event.has_permission",
+#	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
 
 # DocType Class
@@ -130,40 +101,43 @@ app_license = "mit"
 # Override standard doctype classes
 
 # override_doctype_class = {
-# 	"ToDo": "custom_app.overrides.CustomToDo"
+#	"ToDo": "custom_app.overrides.CustomToDo"
 # }
 
 # Document Events
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	# "*": {
+	# 	"on_update": "method",
+	# 	"on_cancel": "method",
+	# 	"on_trash": "method"
+	# }
+    "Salary Slip": {
+        "validate": "pph21_addons.doctype_function.pph21_core.calculate_tax"
+    }
+}
 
 # Scheduled Tasks
 # ---------------
 
 # scheduler_events = {
-# 	"all": [
-# 		"pph21_addons.tasks.all"
-# 	],
-# 	"daily": [
-# 		"pph21_addons.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"pph21_addons.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"pph21_addons.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"pph21_addons.tasks.monthly"
-# 	],
+#	"all": [
+#		"pph21_addons.tasks.all"
+#	],
+#	"daily": [
+#		"pph21_addons.tasks.daily"
+#	],
+#	"hourly": [
+#		"pph21_addons.tasks.hourly"
+#	],
+#	"weekly": [
+#		"pph21_addons.tasks.weekly"
+#	],
+#	"monthly": [
+#		"pph21_addons.tasks.monthly"
+#	],
 # }
 
 # Testing
@@ -175,14 +149,14 @@ app_license = "mit"
 # ------------------------------
 #
 # override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "pph21_addons.event.get_events"
+#	"frappe.desk.doctype.event.event.get_events": "pph21_addons.event.get_events"
 # }
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
 # override_doctype_dashboards = {
-# 	"Task": "pph21_addons.task.get_dashboard_data"
+#	"Task": "pph21_addons.task.get_dashboard_data"
 # }
 
 # exempt linked doctypes from being automatically cancelled
@@ -208,37 +182,29 @@ app_license = "mit"
 # --------------------
 
 # user_data_fields = [
-# 	{
-# 		"doctype": "{doctype_1}",
-# 		"filter_by": "{filter_by}",
-# 		"redact_fields": ["{field_1}", "{field_2}"],
-# 		"partial": 1,
-# 	},
-# 	{
-# 		"doctype": "{doctype_2}",
-# 		"filter_by": "{filter_by}",
-# 		"partial": 1,
-# 	},
-# 	{
-# 		"doctype": "{doctype_3}",
-# 		"strict": False,
-# 	},
-# 	{
-# 		"doctype": "{doctype_4}"
-# 	}
+#	{
+#		"doctype": "{doctype_1}",
+#		"filter_by": "{filter_by}",
+#		"redact_fields": ["{field_1}", "{field_2}"],
+#		"partial": 1,
+#	},
+#	{
+#		"doctype": "{doctype_2}",
+#		"filter_by": "{filter_by}",
+#		"partial": 1,
+#	},
+#	{
+#		"doctype": "{doctype_3}",
+#		"strict": False,
+#	},
+#	{
+#		"doctype": "{doctype_4}"
+#	}
 # ]
 
 # Authentication and authorization
 # --------------------------------
 
 # auth_hooks = [
-# 	"pph21_addons.auth.validate"
+#	"pph21_addons.auth.validate"
 # ]
-
-# Automatically update python controller files with type annotations for this app.
-# export_python_type_annotations = True
-
-# default_log_clearing_doctypes = {
-# 	"Logging DocType Name": 30  # days to retain logs
-# }
-
